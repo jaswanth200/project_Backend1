@@ -6,7 +6,7 @@ pipeline {
             steps {
                 sh """
                     cd demo-backend1
-                    tar -cvf javatar.${img_tag}.tar build
+                    tar -cvf javatar.${img_tag}.tar target
                 """
             }
         }
