@@ -4,13 +4,17 @@ pipeline {
     stages {
         stage("Build & making tar file") {
             steps {
-                sh "cd demo-backend1"
-                sh "cd demo-backend1 && tar -cvf javatar.${img_tag}.tar target"
+                sh """
+                    cd demo-backend1
+                    tar -cvf javatar.${img_tag}.tar build
+                """
             }
         }
-        stage('pushing to nexus reo') {
+        stage('pushing to nexus repo') {
             steps {
-                sh 'curl -v -u jashu:12345 --upload-file javatar.${img_tag}.tar "http://65.2.70.97:8081/repository/maven-repo/"'
+                sh """
+                    curl -v -u jashu:12345 --upload-file demo-backend1/javatar.${img_tag}.tar "http://${ip_address}:8081/repository/maven-repo/javatar.${img_tag}.tar"
+                """
             }
         }
     }
