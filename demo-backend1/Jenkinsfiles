@@ -1,0 +1,20 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage("Build & making tar file") {
+            steps {
+                sh "cd demo-backend1"
+                sh "cd demo-backend1 && tar -cvf javatar.${img_tag}.tar target"
+            }
+        }
+    }
+    
+    stages {
+        stage("Mvn install & Pushing tar file to nexus repo"){
+            steps {
+                sh "cd demo-backend1 && mvn deploy"
+            }
+        }
+    }
+}
